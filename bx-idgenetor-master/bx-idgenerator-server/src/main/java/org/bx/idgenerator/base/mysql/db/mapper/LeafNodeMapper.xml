@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace=" org.bx.db.dao.LeafNodeDao">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="org.bx.idgenerator.entity.LeafNode">
+        <id column="id" property="id" />
+        <result column="system_id" property="systemId" />
+        <result column="group_id" property="groupId" />
+        <result column="biz_tag" property="bizTag" />
+        <result column="max_id" property="maxId" />
+        <result column="fill_zero" property="fillZero" />
+        <result column="step" property="step" />
+        <result column="description" property="description" />
+        <result column="enable_flag" property="enableFlag" />
+        <result column="update_time" property="updateTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, system_id, group_id, biz_tag, max_id, fill_zero, step, description, enable_flag, update_time
+    </sql>
+
+</mapper>

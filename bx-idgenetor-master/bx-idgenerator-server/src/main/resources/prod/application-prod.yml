@@ -1,0 +1,81 @@
+profiles:
+  active: prod
+server:
+  port: 7776
+
+
+# Cloud 配置
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://172.20.0.123:8761/eureka/,http://172.20.0.139:8761/eureka/,http://172.20.0.130:8761/eureka/
+  instance:
+    prefer-ip-address: true
+
+
+spring:
+  datasource:
+    ### useSSL=true 需要开启mysql端的ssl认证，后期需要再做
+    url: jdbc:mysql://172.20.0.251:13306/msb_id_generator?useUnicode=true&characterEncoding=UTF-8&useSSL=false&autoReconnect=true&failOverReadOnly=false
+    schema:
+    username: root
+    password: mashibing
+    driver-class-name: com.mysql.jdbc.Driver
+    #连接池的配置信息
+    initialSize: 50
+    minIdle: 5
+    maxActive: 100
+    ## 配置获取连接等待超时的时间
+    maxWait: 60000
+    #配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+    timeBetweenEvictionRunsMillis: 60000
+    #配置一个连接在池中最小生存的时间，单位是毫秒
+    minEvictableIdleTimeMillis: 300000
+    #validationQuery: SELECT 1 FROM DUAL
+    validationQueryTimeout: 10000
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    # 打开PSCache，并且指定每个连接上PSCache的大小
+    poolPreparedStatements: true
+    maxPoolPreparedStatementPerConnectionSize: 20
+    # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
+    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+    # 合并多个DruidDataSource的监控数据
+    useGlobalDataSourceStat: true
+    #配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+    # filters: stat,wall,log4j
+
+# JWT config
+jwt:
+  # 请求头
+  tokenHeader: X-Token
+  secret: bx-generator
+  # JWT的超期限时间(60*60*24*7)
+  expiration: 604800
+  # JWT负载中的头部
+  tokenHead: 'Bearer '
+
+bx:
+  id-generator:
+    snowflake:
+      # 可选，默认会读取当前机器网卡的IP，最好指定IP
+      workerIp: ''
+      workerPort: ${server.port}
+      generatorName: bx
+      blockBackThreshold: 5000
+      etcdPoints: http://172.20.0.104:2379,http://172.20.0.111:2379,http://172.20.0.119:2379
+      keepAliveInterval: 1500
+      leaseTTL: 3000
+      systemReportInterval: 3000
+      rootEtcdPath: /snowflake/bx
+      pathForever: /snowflake/bx/forever
+      pathTemp: /snowflake/bx/temp
+      # 指定网卡名称
+      netInterfaceName: eth0
+    segment:
+      nextSegmentFetchPercent: 0.9
+      segmentFetchSize: 100
+      threadLocalCacheEnabled: false
+      threadLocalFetchSize: 10
+

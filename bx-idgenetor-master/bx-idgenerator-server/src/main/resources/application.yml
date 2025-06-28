@@ -1,0 +1,73 @@
+server:
+  tomcat:
+    # 最小工作空闲线程数，默认10, 适当增大一些，以便应对突然增长的访问量
+    min-spare-threads: 100
+    #最大线程数
+    #最大工作线程数，默认200, 4核8g内存，线程数经验值800
+    #操作系统做线程之间的切换调度是有系统开销的，所以不是越多越好
+    max-threads: 400
+    #最大链接数
+    max-connections: 9000
+    #最大等待队列长度
+    accept-count: 1000
+
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://test.eureka.msb.com:8762/eureka/
+  instance:
+    prefer-ip-address: true
+
+spring:
+  profiles:
+    active: ${profiles.active}
+  application:
+    name: id-generator-server
+
+# mybatis plus 设置
+mybatis-plus:
+  mapper-locations: classpath*:org/bx/idgenerator/manager/db/mapper/*Mapper.xml
+  # 实体扫描，多个package用逗号或者分号分隔
+  typeAliasesPackage: org.bx.idgenerator.manager.entity
+  # 主键类型  0:"数据库ID自增", 1:"用户输入ID",2:"全局唯一ID (数字类型唯一ID)", 3:"全局唯一ID UUID";
+  global-config:
+    id-type: 0
+    #字段策略 0:"忽略判断",1:"非 NULL 判断"),2:"非空判断"
+    field-strategy: 2
+    #驼峰下划线转换
+    db-column-underline: true
+    #刷新mapper 调试神器
+    refresh-mapper: true
+    #数据库大写下划线转换
+    #mybatis-plus.global-config.capital-mode=true
+    #序列接口实现类配置
+    #mybatis-plus.global-config.key-generator=com.baomidou.springboot.xxx
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+# JWT config
+jwt:
+  # 请求头
+  tokenHeader: X-Token
+  secret: bx-generator
+  # JWT的超期限时间(60*60*24*7)
+  expiration: 604800
+  # JWT负载中的头部
+  tokenHead: 'Bearer '
+
+management:
+  endpoints:
+    web:
+      # 访问路径中没有actuator 直接是http://localhost:port/prometheus
+      base-path: /
+      exposure:
+        include: 'prometheus'
+  metrics:
+    tags:
+      application: ${spring.application.name}
+bx:
+  idgenerator:
+    snowflake: true
+    segment: true
