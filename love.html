@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <title>给廖芳琴的表白</title>
+  <style>
+    body {
+      background-color: black;
+      color: white;
+      font-family: 'Arial', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      height: 100vh;
+      overflow: hidden;
+    }
+    h1 {
+      font-size: 3em;
+      color: #ff3366;
+      animation: pulse 1.2s infinite;
+    }
+    p {
+      font-size: 1.5em;
+      margin-top: 20px;
+    }
+    .heart {
+      color: red;
+      font-size: 5em;
+      animation: beat 1s infinite;
+    }
+    @keyframes beat {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.3); }
+    }
+    @keyframes pulse {
+      0% { opacity: 0.8; }
+      50% { opacity: 1; }
+      100% { opacity: 0.8; }
+    }
+  </style>
+</head>
+<body>
+  <h1>廖芳琴 ❤️</h1>
+  <div class="heart">💓</div>
+  <p>你就是我代码里的唯一常量，</p>
+  <p>不论重启多少次，心跳永远为你运行。</p>
+  <script>
+    setTimeout(() => {
+      alert("廖芳琴，我喜欢你。");
+      alert("从写下 Hello World 的那一刻起，我就想把世界介绍给你。");
+      alert("愿意让我进入你的主函数（main）吗？ ❤️");
+    }, 1000);
+  </script>
+</body>
+</html>
